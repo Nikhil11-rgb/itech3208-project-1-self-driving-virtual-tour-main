@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>About the Avenue — Avenue of Honour</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Source+Serif+4:opsz,wght@8..60,400;8..60,500&display=swap" rel="stylesheet"/>
+  <style>
+
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --gd:#1a2e1f;--gm:#2d4a32;--gl:#3d6645;--gp:#e8f0e9;
+  --gold:#b8852a;--goldl:#d4a84b;--parch:#f7f3eb;--pdark:#ede7d8;
+  --td:#1a1a1a;--tb:#3a3530;--tm:#7a7268;--tl:#a89f94;
+  --red:#a63a2a;--orange:#c86b22;--yellow:#f2c94c;--leaf:#4f7d3a;--bord:rgba(45,74,50,0.15);
+  --shm:0 6px 24px rgba(0,0,0,0.12);--shs:0 2px 8px rgba(0,0,0,0.08);
+  --r:6px;--rl:12px;--nh:68px;
+  --fd:'Playfair Display',Georgia,serif;--fb:'Source Serif 4',Georgia,serif;
+}
+html{scroll-behavior:smooth;}
+body{font-family:var(--fb);color:var(--tb);background:var(--parch);line-height:1.7;font-size:16px;-webkit-font-smoothing:antialiased;padding-top:var(--nh);}
+
+/* === NAV === */
+.site-nav{position:fixed;top:0;left:0;right:0;height:var(--nh);z-index:1000;background:rgba(26,46,31,0.97);border-bottom:1px solid rgba(184,133,42,0.3);}
+.nav-inner{max-width:1200px;margin:0 auto;padding:0 2rem;height:var(--nh);display:flex;align-items:center;gap:1rem;}
+.nav-brand{display:flex;align-items:center;gap:10px;text-decoration:none;flex-shrink:0;}
+.nav-emblem{color:var(--gold);font-size:20px;line-height:1;}
+.nav-brand-text{display:flex;flex-direction:column;line-height:1.2;}
+.nav-brand-title{color:#fff;font-family:var(--fd);font-size:15px;font-weight:600;letter-spacing:0.02em;}
+.nav-brand-sub{color:var(--goldl);font-size:10px;letter-spacing:0.1em;text-transform:uppercase;}
+.nav-links{margin-left:auto;display:flex;align-items:center;gap:2px;}
+.nav-link{color:rgba(255,255,255,0.75);text-decoration:none;font-size:14px;padding:0.5rem 0.85rem;border-radius:var(--r);transition:all 0.2s;font-family:var(--fb);white-space:nowrap;}
+.nav-link:hover{color:#fff;background:rgba(255,255,255,0.1);}
+.nav-link.active{color:var(--goldl);background:rgba(184,133,42,0.15);border:1px solid rgba(184,133,42,0.3);}
+.nav-toggle{display:none;flex-direction:column;gap:5px;background:none;border:none;cursor:pointer;padding:8px;margin-left:auto;}
+.nav-toggle span{width:22px;height:2px;background:#fff;display:block;}
+.mobile-menu{display:none;position:fixed;top:var(--nh);left:0;right:0;background:var(--gd);z-index:999;border-bottom:1px solid rgba(184,133,42,0.2);padding:0.5rem 2rem 1rem;flex-direction:column;}
+.mobile-menu.open{display:flex!important;}
+.mobile-menu .nav-link{color:rgba(255,255,255,0.8);padding:0.75rem 0;border-bottom:1px solid rgba(255,255,255,0.08);border-radius:0;font-size:15px;}
+.mobile-menu .nav-link:last-child{border-bottom:none;}
+@media(max-width:768px){.nav-links{display:none!important;}.nav-toggle{display:flex!important;}}
+@media(min-width:769px){.nav-toggle{display:none!important;}.mobile-menu:not(.open){display:none!important;}}
+
+/* === PAGE HERO === */
+.page-hero{background:var(--gd);padding:4.5rem 0 3.5rem;position:relative;overflow:hidden;}
+.page-hero::before{content:'';position:absolute;inset:0;background:url('https://kingstonavenueofhonour.org.au/wp-content/uploads/Avenue-020-UPDATED-800x369.jpg') center/cover;opacity:0.1;}
+.page-hero-inner{position:relative;z-index:1;max-width:1200px;margin:0 auto;padding:0 2rem;}
+.page-hero-eyebrow{font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:var(--goldl);margin-bottom:0.75rem;display:flex;align-items:center;gap:0.6rem;}
+.page-hero-eyebrow::before{content:'';width:24px;height:1px;background:var(--gold);display:inline-block;}
+.page-hero-title{font-family:var(--fd);font-size:clamp(2rem,4vw,3rem);font-weight:700;color:#fff;line-height:1.15;margin-bottom:0.75rem;}
+.page-hero-desc{color:rgba(255,255,255,0.7);font-size:1rem;max-width:560px;line-height:1.75;}
+
+/* === CONTAINER === */
+.container{max-width:1200px;margin:0 auto;padding:0 2rem;}
+.section-label{font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:var(--gold);margin-bottom:0.75rem;display:flex;align-items:center;gap:0.75rem;}
+.section-label::before{content:'';width:24px;height:1px;background:var(--gold);display:inline-block;}
+.section-title{font-family:var(--fd);font-size:clamp(1.75rem,3.5vw,2.4rem);font-weight:700;color:var(--td);line-height:1.2;margin-bottom:1rem;}
+
+/* === FOOTER === */
+.site-footer{background:var(--gd);color:rgba(255,255,255,0.65);padding:3rem 0 1.5rem;margin-top:5rem;}
+.footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr;gap:3rem;max-width:1200px;margin:0 auto;padding:0 2rem 2rem;border-bottom:1px solid rgba(255,255,255,0.1);}
+.footer-logo{font-family:var(--fd);font-size:1.15rem;color:#fff;margin-bottom:0.75rem;}
+.footer-brand p{font-size:0.85rem;line-height:1.7;margin-bottom:0.4rem;}
+.footer-lest{color:var(--goldl)!important;font-style:italic;font-family:var(--fd);}
+.footer-col h4{font-family:var(--fd);color:#fff;font-size:0.9rem;margin-bottom:0.75rem;}
+.footer-col a{display:block;color:rgba(255,255,255,0.6);text-decoration:none;font-size:0.85rem;padding:0.25rem 0;transition:color 0.2s;}
+.footer-col a:hover{color:var(--goldl);}
+.footer-bottom{max-width:1200px;margin:0 auto;padding:1.5rem 2rem 0;text-align:center;font-size:0.8rem;color:rgba(255,255,255,0.3);}
+@media(max-width:900px){.footer-grid{grid-template-columns:1fr 1fr;}.footer-brand{grid-column:1/-1;}}
+@media(max-width:600px){.footer-grid{grid-template-columns:1fr;}.container{padding:0 1.25rem;}}
+
+
+.about-body{padding:5rem 0;}
+.about-grid{display:grid;grid-template-columns:1fr 340px;gap:4rem;align-items:start;}
+.about-text p{margin-bottom:1.25rem;font-size:1.05rem;line-height:1.8;color:var(--tb);}
+.about-lead{font-size:1.15rem!important;font-weight:500;color:var(--td)!important;}
+.about-text strong{color:var(--gm);}
+.about-sidebar{display:flex;flex-direction:column;gap:1.25rem;}
+.info-card{background:#fff;border:1px solid var(--bord);border-radius:var(--rl);padding:1.5rem;transition:box-shadow 0.2s;}
+.info-card:hover{box-shadow:var(--shm);}
+.info-card-icon{font-size:26px;margin-bottom:0.75rem;}
+.info-card h3{font-family:var(--fd);font-size:1rem;color:var(--gd);margin-bottom:0.5rem;}
+.info-card p{font-size:0.875rem;color:var(--tm);line-height:1.65;}
+.timeline{border-left:2px solid var(--bord);padding-left:2rem;margin:2.5rem 0;}
+.tl-item{position:relative;margin-bottom:1.75rem;}
+.tl-item::before{content:'';position:absolute;left:-2.6rem;top:6px;width:12px;height:12px;border-radius:50%;background:var(--gold);border:2px solid #fff;box-shadow:0 0 0 2px var(--gold);}
+.tl-year{font-size:12px;font-weight:600;color:var(--gold);letter-spacing:0.06em;margin-bottom:3px;}
+.tl-title{font-family:var(--fd);font-size:0.95rem;color:var(--td);margin-bottom:3px;font-weight:600;}
+.tl-desc{font-size:0.875rem;color:var(--tm);line-height:1.6;}
+@media(max-width:900px){.about-grid{grid-template-columns:1fr;}}
+
+  
+
+/* Client requested autumn colour scheme: orange, yellow, red and greens */
+.site-nav{background:linear-gradient(90deg,#142515 0%,#1f3f25 55%,rgba(166,58,42,0.94) 145%)!important;border-bottom-color:rgba(242,201,76,0.35)!important;}
+.nav-emblem,.nav-brand-sub{color:#f2c94c!important;}
+.nav-link.active{color:#f2c94c!important;background:rgba(200,107,34,0.20)!important;border-color:rgba(242,201,76,0.45)!important;}
+.nav-link:hover{background:rgba(200,107,34,0.16)!important;}
+button,.btn,.hero-cta-primary,.primary-btn,.stop-btn.active{box-shadow:0 4px 14px rgba(200,107,34,0.12);}
+::selection{background:#d08a1f;color:#142515;}
+
+
+
+/* === CLIENT FEEDBACK UPDATE: autumn orange, yellow, red and greens across whole website === */
+:root{
+  --client-green-deep:#122818;
+  --client-green:#2f5b35;
+  --client-leaf:#5f8f3f;
+  --client-orange:#c86b22;
+  --client-yellow:#f2c94c;
+  --client-red:#a63a2a;
+  --client-cream:#f8f1df;
+}
+.site-header,.site-nav,.topbar,.tour-nav{
+  background:linear-gradient(90deg,#122818 0%,#234a2b 56%,#7f2f25 130%)!important;
+  border-bottom:1px solid rgba(242,201,76,.42)!important;
+}
+.brand-emblem,.nav-emblem,.brand-sub,.nav-brand-sub,.page-hero-eyebrow,.section-label,
+.nav-link.active,.mobile-nav-link.active,.mobile-menu .nav-link.active{
+  color:var(--client-yellow)!important;
+}
+.nav-link.active,.mobile-nav-link.active,.mobile-menu .nav-link.active{
+  background:rgba(200,107,34,.22)!important;
+  border-color:rgba(242,201,76,.5)!important;
+}
+.nav-link:hover,.mobile-nav-link:hover,.mobile-menu .nav-link:hover{
+  color:#fff!important;
+  background:rgba(200,107,34,.17)!important;
+}
+.btn-primary,.hero-cta-primary,.primary-btn,.cta-primary,.tour-btn-primary,
+button.primary,.resource-icon,.profile-avatar,.filter-btn.active,.stop-btn.active,
+.progress-dot.active,.scene-dot.active,.hotspot,.map-marker.active{
+  background:linear-gradient(135deg,var(--client-orange),var(--client-yellow))!important;
+  color:#122818!important;
+  border-color:rgba(242,201,76,.7)!important;
+}
+.btn-primary:hover,.hero-cta-primary:hover,.primary-btn:hover,.cta-primary:hover{
+  background:linear-gradient(135deg,var(--client-red),var(--client-orange))!important;
+  color:#fff!important;
+}
+.page-hero,.hero,.site-footer,.footer,.tour-sidebar,.info-panel,.stop-card,.nearby-card{
+  border-color:rgba(242,201,76,.25)!important;
+}
+.card,.info-card,.resource-card,.profile-card,.feature-card,.quick-card,.route-card,
+.about-card,.tree-card,.stat-card{
+  border-top:3px solid var(--client-orange)!important;
+}
+a:not(.nav-link):not(.btn):not(.header-brand):not(.nav-brand){
+  color:#9d4f1e;
+}
+a:not(.nav-link):not(.btn):not(.header-brand):not(.nav-brand):hover{
+  color:var(--client-red);
+}
+::selection{background:var(--client-yellow);color:#122818;}
+
+</style>
+</head>
+<body>
+  <nav class="site-nav">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-brand">
+        <span class="nav-emblem">✦</span>
+        <div class="nav-brand-text">
+          <span class="nav-brand-title">Avenue of Honour</span>
+          <span class="nav-brand-sub">Kingston Avenue of Honour</span>
+        </div>
+      </a>
+      <div class="nav-links">
+        <a href="index.html" class="nav-link">Home</a>
+        <a href="virtual-tour.html" target="_blank" class="nav-link">360° Virtual Tour</a>
+        <a href="tree-map.html" target="_blank" class="nav-link">Tree Map</a>
+        <a href="about.html" target="_blank" class="nav-link active">About</a>
+        <a href="profiles.html" target="_blank" class="nav-link">Profiles</a>
+        <a href="resources.html" target="_blank" class="nav-link">Resources</a>
+      </div>
+      <button class="nav-toggle" id="navToggle"><span></span><span></span><span></span></button>
+    </div>
+    <div class="mobile-menu" id="mobileMenu">
+      <a href="index.html" class="nav-link">Home</a>
+      <a href="virtual-tour.html" target="_blank" class="nav-link">360° Virtual Tour</a>
+      <a href="tree-map.html" target="_blank" class="nav-link">Tree Map</a>
+      <a href="about.html" target="_blank" class="nav-link active">About</a>
+      <a href="profiles.html" target="_blank" class="nav-link">Profiles</a>
+      <a href="resources.html" target="_blank" class="nav-link">Resources</a>
+    </div>
+  </nav>
+  <div class="page-hero">
+    <div class="page-hero-inner">
+      <div class="page-hero-eyebrow">The Story</div>
+      <h1 class="page-hero-title">About the Kingston<br/>Avenue of Honour</h1>
+      <p class="page-hero-desc">How a community came together in 1918 to plant 286 trees — one for each man and woman who served — creating a living memorial that endures more than a century later.</p>
+    </div>
+  </div>
+
+  <section class="about-body">
+    <div class="container">
+      <div class="about-grid">
+        <div class="about-text">
+          <p class="about-lead">This project introduces the Avenue as the former Shire of Creswick Avenue of Honour at Kingston. From here, we use the name Kingston Avenue of Honour to help visitors find and recognise the Avenue. In August 1918, as the guns of the Western Front fell silent, the community gathered to plant something that would outlast the war — 250 elm trees, each bearing the name of a local man or woman who had served.</p>
+          <p>Further plantings brought the total to <strong>286 trees</strong>. Nine commemorate women who served as nurses. Five remain unnamed. The trees stretch <strong>2.9 kilometres</strong> along Kingston Road, starting at Victoria Road on the northern edge of the township and reaching toward the Midland Highway.</p>
+          <p>The Avenue of Honour encompasses communities across the former Shire: <strong>Kingston</strong>, <strong>Tourello</strong>, <strong>Yandoit Hills</strong>, <strong>Creswick</strong>, <strong>Smeaton</strong>, and surrounding areas — all bound together by sacrifice and remembrance.</p>
+          <p>Listed on the Victorian Heritage Register, this living monument is cared for by the Kingston Friends of the Avenue and the Creswick-Smeaton RSL.</p>
+
+          <h3 style="font-family:var(--fd);font-size:1.15rem;color:var(--gd);margin:2rem 0 0.5rem;font-weight:700;">Timeline</h3>
+          <div class="timeline">
+            <div class="tl-item"><div class="tl-year">August 1918</div><div class="tl-title">250 trees planted</div><div class="tl-desc">The community gathers at Kingston to plant the first 250 trees along Kingston Road.</div></div>
+            <div class="tl-item"><div class="tl-year">1918–1919</div><div class="tl-title">Avenue grows to 286 trees</div><div class="tl-desc">Further plantings complete the Avenue, with 9 trees for nurses and 5 unnamed.</div></div>
+            <div class="tl-item"><div class="tl-year">1927</div><div class="tl-title">The Monument unveiled</div><div class="tl-desc">Harcourt granite monument unveiled by Brigadier-General Elliot on 18 December.</div></div>
+            <div class="tl-item"><div class="tl-year">1999</div><div class="tl-title">Friends of the Avenue formed</div><div class="tl-desc">Volunteer group forms to restore and preserve the Avenue through working bees and fundraising.</div></div>
+            <div class="tl-item"><div class="tl-year">2014</div><div class="tl-title">Nurses' trees adorned with red bows</div><div class="tl-desc">The nine nurses' trees are adorned with red bows by their descendants.</div></div>
+            <div class="tl-item"><div class="tl-year">2017</div><div class="tl-title">Victorian Heritage Register listing</div><div class="tl-desc">The Avenue is listed on the Victorian Heritage Register. New signage installed.</div></div>
+            <div class="tl-item"><div class="tl-year">2018</div><div class="tl-title">Centenary of Planting</div><div class="tl-desc">Over 2,000 people attend the Centenary celebration on 11 November 2018.</div></div>
+          </div>
+        </div>
+        <div class="about-sidebar">
+          <div class="info-card"><div class="info-card-icon">🌳</div><h3>Dutch Elm Trees</h3><p>The Avenue's predominantly Dutch Elm trees were planted with enamel name plaques on wooden tree guards. Apart from replacing six trees, the Avenue remains intact.</p></div>
+          <div class="info-card"><div class="info-card-icon">🪨</div><h3>The Monument</h3><p>Harcourt granite, unveiled by Brigadier-General Elliot on 18 December 1927, marking the northern entrance to the Avenue.</p></div>
+          <div class="info-card"><div class="info-card-icon">👩‍⚕️</div><h3>Nine Nurses</h3><p>Nine trees commemorate women of the Australian Army Nursing Service. Their trees were adorned with red bows in 2014 by descendants.</p></div>
+          <div class="info-card"><div class="info-card-icon">📜</div><h3>Heritage Listed</h3><p>Listed on the Victorian Heritage Register in recognition of its significance to the community and Australia's wartime legacy.</p></div>
+          <div class="info-card"><div class="info-card-icon">🤝</div><h3>Friends of the Avenue</h3><p>The volunteer group, incorporated in 2014, cares for the trees and their history — organising tours, working bees, and collecting stories.</p></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="site-footer">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="footer-logo">✦ Avenue of Honour</div>
+        <p>A community heritage project for the former Shire of Creswick.</p>
+        <p class="footer-lest">Lest We Forget</p>
+      </div>
+      <div class="footer-col">
+        <h4>Pages</h4>
+        <a href="virtual-tour.html" target="_blank">360° Virtual Tour</a>
+        <a href="tree-map.html" target="_blank">Tree Map</a>
+        <a href="about.html" target="_blank">About</a>
+        <a href="profiles.html" target="_blank">Profiles</a>
+        <a href="resources.html" target="_blank">Resources</a>
+      </div>
+      <div class="footer-col">
+        <h4>External Links</h4>
+        <a href="https://kingstonavenueofhonour.org.au" target="_blank">Kingston Avenue ↗</a>
+        <a href="https://www.creswicksmeatonrsl.org.au" target="_blank">Creswick RSL ↗</a>
+        <a href="https://www.awm.gov.au" target="_blank">War Memorial ↗</a>
+      </div>
+    </div>
+    <div class="footer-bottom"><p>© 2026 Kingston Avenue of Honour — former Shire of Creswick Avenue of Honour at Kingston</p></div>
+  </footer>
+  <script>document.getElementById('navToggle').addEventListener('click',function(){document.getElementById('mobileMenu').classList.toggle('open');});</script>
+</body>
+</html>

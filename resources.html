@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>Resources — Avenue of Honour</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Source+Serif+4:opsz,wght@8..60,400;8..60,500&display=swap" rel="stylesheet"/>
+  <style>
+
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --gd:#1a2e1f;--gm:#2d4a32;--gl:#3d6645;--gp:#e8f0e9;
+  --gold:#b8852a;--goldl:#d4a84b;--parch:#f7f3eb;--pdark:#ede7d8;
+  --td:#1a1a1a;--tb:#3a3530;--tm:#7a7268;--tl:#a89f94;
+  --red:#a63a2a;--orange:#c86b22;--yellow:#f2c94c;--leaf:#4f7d3a;--bord:rgba(45,74,50,0.15);
+  --shm:0 6px 24px rgba(0,0,0,0.12);--shs:0 2px 8px rgba(0,0,0,0.08);
+  --r:6px;--rl:12px;--nh:68px;
+  --fd:'Playfair Display',Georgia,serif;--fb:'Source Serif 4',Georgia,serif;
+}
+html{scroll-behavior:smooth;}
+body{font-family:var(--fb);color:var(--tb);background:var(--parch);line-height:1.7;font-size:16px;-webkit-font-smoothing:antialiased;padding-top:var(--nh);}
+
+/* === NAV === */
+.site-nav{position:fixed;top:0;left:0;right:0;height:var(--nh);z-index:1000;background:rgba(26,46,31,0.97);border-bottom:1px solid rgba(184,133,42,0.3);}
+.nav-inner{max-width:1200px;margin:0 auto;padding:0 2rem;height:var(--nh);display:flex;align-items:center;gap:1rem;}
+.nav-brand{display:flex;align-items:center;gap:10px;text-decoration:none;flex-shrink:0;}
+.nav-emblem{color:var(--gold);font-size:20px;line-height:1;}
+.nav-brand-text{display:flex;flex-direction:column;line-height:1.2;}
+.nav-brand-title{color:#fff;font-family:var(--fd);font-size:15px;font-weight:600;letter-spacing:0.02em;}
+.nav-brand-sub{color:var(--goldl);font-size:10px;letter-spacing:0.1em;text-transform:uppercase;}
+.nav-links{margin-left:auto;display:flex;align-items:center;gap:2px;}
+.nav-link{color:rgba(255,255,255,0.75);text-decoration:none;font-size:14px;padding:0.5rem 0.85rem;border-radius:var(--r);transition:all 0.2s;font-family:var(--fb);white-space:nowrap;}
+.nav-link:hover{color:#fff;background:rgba(255,255,255,0.1);}
+.nav-link.active{color:var(--goldl);background:rgba(184,133,42,0.15);border:1px solid rgba(184,133,42,0.3);}
+.nav-toggle{display:none;flex-direction:column;gap:5px;background:none;border:none;cursor:pointer;padding:8px;margin-left:auto;}
+.nav-toggle span{width:22px;height:2px;background:#fff;display:block;}
+.mobile-menu{display:none;position:fixed;top:var(--nh);left:0;right:0;background:var(--gd);z-index:999;border-bottom:1px solid rgba(184,133,42,0.2);padding:0.5rem 2rem 1rem;flex-direction:column;}
+.mobile-menu.open{display:flex!important;}
+.mobile-menu .nav-link{color:rgba(255,255,255,0.8);padding:0.75rem 0;border-bottom:1px solid rgba(255,255,255,0.08);border-radius:0;font-size:15px;}
+.mobile-menu .nav-link:last-child{border-bottom:none;}
+@media(max-width:768px){.nav-links{display:none!important;}.nav-toggle{display:flex!important;}}
+@media(min-width:769px){.nav-toggle{display:none!important;}.mobile-menu:not(.open){display:none!important;}}
+
+/* === PAGE HERO === */
+.page-hero{background:var(--gd);padding:4.5rem 0 3.5rem;position:relative;overflow:hidden;}
+.page-hero::before{content:'';position:absolute;inset:0;background:url('https://kingstonavenueofhonour.org.au/wp-content/uploads/Avenue-020-UPDATED-800x369.jpg') center/cover;opacity:0.1;}
+.page-hero-inner{position:relative;z-index:1;max-width:1200px;margin:0 auto;padding:0 2rem;}
+.page-hero-eyebrow{font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:var(--goldl);margin-bottom:0.75rem;display:flex;align-items:center;gap:0.6rem;}
+.page-hero-eyebrow::before{content:'';width:24px;height:1px;background:var(--gold);display:inline-block;}
+.page-hero-title{font-family:var(--fd);font-size:clamp(2rem,4vw,3rem);font-weight:700;color:#fff;line-height:1.15;margin-bottom:0.75rem;}
+.page-hero-desc{color:rgba(255,255,255,0.7);font-size:1rem;max-width:560px;line-height:1.75;}
+
+/* === CONTAINER === */
+.container{max-width:1200px;margin:0 auto;padding:0 2rem;}
+.section-label{font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:var(--gold);margin-bottom:0.75rem;display:flex;align-items:center;gap:0.75rem;}
+.section-label::before{content:'';width:24px;height:1px;background:var(--gold);display:inline-block;}
+.section-title{font-family:var(--fd);font-size:clamp(1.75rem,3.5vw,2.4rem);font-weight:700;color:var(--td);line-height:1.2;margin-bottom:1rem;}
+
+/* === FOOTER === */
+.site-footer{background:var(--gd);color:rgba(255,255,255,0.65);padding:3rem 0 1.5rem;margin-top:5rem;}
+.footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr;gap:3rem;max-width:1200px;margin:0 auto;padding:0 2rem 2rem;border-bottom:1px solid rgba(255,255,255,0.1);}
+.footer-logo{font-family:var(--fd);font-size:1.15rem;color:#fff;margin-bottom:0.75rem;}
+.footer-brand p{font-size:0.85rem;line-height:1.7;margin-bottom:0.4rem;}
+.footer-lest{color:var(--goldl)!important;font-style:italic;font-family:var(--fd);}
+.footer-col h4{font-family:var(--fd);color:#fff;font-size:0.9rem;margin-bottom:0.75rem;}
+.footer-col a{display:block;color:rgba(255,255,255,0.6);text-decoration:none;font-size:0.85rem;padding:0.25rem 0;transition:color 0.2s;}
+.footer-col a:hover{color:var(--goldl);}
+.footer-bottom{max-width:1200px;margin:0 auto;padding:1.5rem 2rem 0;text-align:center;font-size:0.8rem;color:rgba(255,255,255,0.3);}
+@media(max-width:900px){.footer-grid{grid-template-columns:1fr 1fr;}.footer-brand{grid-column:1/-1;}}
+@media(max-width:600px){.footer-grid{grid-template-columns:1fr;}.container{padding:0 1.25rem;}}
+
+
+.resources-body{padding:5rem 0;}
+.resources-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:1.5rem;margin-bottom:3rem;}
+.resource-card{background:#fff;border:1px solid var(--bord);border-radius:var(--rl);padding:1.75rem;text-decoration:none;display:flex;gap:1.25rem;align-items:flex-start;transition:all 0.2s;}
+.resource-card:hover{box-shadow:var(--shm);border-color:var(--gl);transform:translateY(-2px);}
+.resource-icon{font-size:32px;flex-shrink:0;line-height:1;}
+.resource-body h3{font-family:var(--fd);font-size:1.05rem;color:var(--td);margin-bottom:0.5rem;}
+.resource-body p{font-size:0.875rem;color:var(--tm);line-height:1.65;margin-bottom:0.75rem;}
+.resource-link{font-size:12px;color:var(--gl);}
+.contact-box{background:var(--gp);border:1px solid var(--bord);border-radius:var(--rl);padding:2rem;}
+.contact-box h3{font-family:var(--fd);font-size:1.2rem;color:var(--gd);margin-bottom:0.75rem;}
+.contact-box p{font-size:0.95rem;color:var(--tb);line-height:1.75;margin-bottom:0.75rem;}
+.contact-box a{color:var(--gm);}
+
+  
+
+/* Client requested autumn colour scheme: orange, yellow, red and greens */
+.site-nav{background:linear-gradient(90deg,#142515 0%,#1f3f25 55%,rgba(166,58,42,0.94) 145%)!important;border-bottom-color:rgba(242,201,76,0.35)!important;}
+.nav-emblem,.nav-brand-sub{color:#f2c94c!important;}
+.nav-link.active{color:#f2c94c!important;background:rgba(200,107,34,0.20)!important;border-color:rgba(242,201,76,0.45)!important;}
+.nav-link:hover{background:rgba(200,107,34,0.16)!important;}
+button,.btn,.hero-cta-primary,.primary-btn,.stop-btn.active{box-shadow:0 4px 14px rgba(200,107,34,0.12);}
+::selection{background:#d08a1f;color:#142515;}
+
+
+
+/* === CLIENT FEEDBACK UPDATE: autumn orange, yellow, red and greens across whole website === */
+:root{
+  --client-green-deep:#122818;
+  --client-green:#2f5b35;
+  --client-leaf:#5f8f3f;
+  --client-orange:#c86b22;
+  --client-yellow:#f2c94c;
+  --client-red:#a63a2a;
+  --client-cream:#f8f1df;
+}
+.site-header,.site-nav,.topbar,.tour-nav{
+  background:linear-gradient(90deg,#122818 0%,#234a2b 56%,#7f2f25 130%)!important;
+  border-bottom:1px solid rgba(242,201,76,.42)!important;
+}
+.brand-emblem,.nav-emblem,.brand-sub,.nav-brand-sub,.page-hero-eyebrow,.section-label,
+.nav-link.active,.mobile-nav-link.active,.mobile-menu .nav-link.active{
+  color:var(--client-yellow)!important;
+}
+.nav-link.active,.mobile-nav-link.active,.mobile-menu .nav-link.active{
+  background:rgba(200,107,34,.22)!important;
+  border-color:rgba(242,201,76,.5)!important;
+}
+.nav-link:hover,.mobile-nav-link:hover,.mobile-menu .nav-link:hover{
+  color:#fff!important;
+  background:rgba(200,107,34,.17)!important;
+}
+.btn-primary,.hero-cta-primary,.primary-btn,.cta-primary,.tour-btn-primary,
+button.primary,.resource-icon,.profile-avatar,.filter-btn.active,.stop-btn.active,
+.progress-dot.active,.scene-dot.active,.hotspot,.map-marker.active{
+  background:linear-gradient(135deg,var(--client-orange),var(--client-yellow))!important;
+  color:#122818!important;
+  border-color:rgba(242,201,76,.7)!important;
+}
+.btn-primary:hover,.hero-cta-primary:hover,.primary-btn:hover,.cta-primary:hover{
+  background:linear-gradient(135deg,var(--client-red),var(--client-orange))!important;
+  color:#fff!important;
+}
+.page-hero,.hero,.site-footer,.footer,.tour-sidebar,.info-panel,.stop-card,.nearby-card{
+  border-color:rgba(242,201,76,.25)!important;
+}
+.card,.info-card,.resource-card,.profile-card,.feature-card,.quick-card,.route-card,
+.about-card,.tree-card,.stat-card{
+  border-top:3px solid var(--client-orange)!important;
+}
+a:not(.nav-link):not(.btn):not(.header-brand):not(.nav-brand){
+  color:#9d4f1e;
+}
+a:not(.nav-link):not(.btn):not(.header-brand):not(.nav-brand):hover{
+  color:var(--client-red);
+}
+::selection{background:var(--client-yellow);color:#122818;}
+
+</style>
+</head>
+<body>
+  <nav class="site-nav">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-brand">
+        <span class="nav-emblem">✦</span>
+        <div class="nav-brand-text">
+          <span class="nav-brand-title">Avenue of Honour</span>
+          <span class="nav-brand-sub">Kingston Avenue of Honour</span>
+        </div>
+      </a>
+      <div class="nav-links">
+        <a href="index.html" class="nav-link">Home</a>
+        <a href="virtual-tour.html" target="_blank" class="nav-link">360° Virtual Tour</a>
+        <a href="tree-map.html" target="_blank" class="nav-link">Tree Map</a>
+        <a href="about.html" target="_blank" class="nav-link">About</a>
+        <a href="profiles.html" target="_blank" class="nav-link">Profiles</a>
+        <a href="resources.html" target="_blank" class="nav-link active">Resources</a>
+      </div>
+      <button class="nav-toggle" id="navToggle"><span></span><span></span><span></span></button>
+    </div>
+    <div class="mobile-menu" id="mobileMenu">
+      <a href="index.html" class="nav-link">Home</a>
+      <a href="virtual-tour.html" target="_blank" class="nav-link">360° Virtual Tour</a>
+      <a href="tree-map.html" target="_blank" class="nav-link">Tree Map</a>
+      <a href="about.html" target="_blank" class="nav-link">About</a>
+      <a href="profiles.html" target="_blank" class="nav-link">Profiles</a>
+      <a href="resources.html" target="_blank" class="nav-link active">Resources</a>
+    </div>
+  </nav>
+  <div class="page-hero">
+    <div class="page-hero-inner">
+      <div class="page-hero-eyebrow">Further Reading</div>
+      <h1 class="page-hero-title">Resources &amp;<br/>Further Research</h1>
+      <p class="page-hero-desc">Explore the organisations, websites, and archives that preserve the history of the Kingston Avenue of Honour and the communities it represents.</p>
+    </div>
+  </div>
+
+  <section class="resources-body">
+    <div class="container">
+      <div class="section-label">Official Sources</div>
+      <h2 class="section-title">Key Organisations</h2>
+      <div class="resources-grid">
+        <a href="https://kingstonavenueofhonour.org.au" target="_blank" rel="noopener" class="resource-card">
+          <div class="resource-icon">🌳</div>
+          <div class="resource-body"><h3>Kingston Avenue of Honour</h3><p>Official website of the Kingston Friends of the Avenue — history, news, events, and the interactive tree map app with full records from Sentinels of Service.</p><span class="resource-link">kingstonavenueofhonour.org.au ↗</span></div>
+        </a>
+        <a href="https://www.creswicksmeatonrsl.org.au" target="_blank" rel="noopener" class="resource-card">
+          <div class="resource-icon">⚔️</div>
+          <div class="resource-body"><h3>Creswick-Smeaton RSL</h3><p>The RSL sub-branch serving Creswick and Smeaton — supporting veterans and preserving the military history of the district including honour boards.</p><span class="resource-link">creswicksmeatonrsl.org.au ↗</span></div>
+        </a>
+        <a href="https://www.awm.gov.au" target="_blank" rel="noopener" class="resource-card">
+          <div class="resource-icon">🎖️</div>
+          <div class="resource-body"><h3>Australian War Memorial</h3><p>Research individual service records, unit histories, photographs, and the Roll of Honour through the AWM's extensive online collections.</p><span class="resource-link">awm.gov.au ↗</span></div>
+        </a>
+        <a href="https://www.buriedriversofgold.org" target="_blank" rel="noopener" class="resource-card">
+          <div class="resource-icon">⛏️</div>
+          <div class="resource-body"><h3>Buried Rivers of Gold</h3><p>Explore the world's richest deep alluvial goldfield around Creswick, Allendale, Kingston and Smeaton — the mining heritage that shaped these communities.</p><span class="resource-link">buriedriversofgold.org ↗</span></div>
+        </a>
+        <a href="https://www.naa.gov.au" target="_blank" rel="noopener" class="resource-card">
+          <div class="resource-icon">📁</div>
+          <div class="resource-body"><h3>National Archives of Australia</h3><p>Access digitised WWI service records and enlistment papers for individuals who served in the Australian Imperial Force.</p><span class="resource-link">naa.gov.au ↗</span></div>
+        </a>
+        <a href="https://www.hepburn.vic.gov.au" target="_blank" rel="noopener" class="resource-card">
+          <div class="resource-icon">🏛️</div>
+          <div class="resource-body"><h3>Hepburn Shire Council</h3><p>The local government authority — working with the Friends of the Avenue on tree maintenance, signage, and heritage preservation.</p><span class="resource-link">hepburn.vic.gov.au ↗</span></div>
+        </a>
+      </div>
+      <div class="contact-box">
+        <h3>Get Involved or Share Information</h3>
+        <p>If you have a family connection to the Avenue — photographs, letters, service records, or stories about a person commemorated by a tree — the Kingston Friends of the Avenue would love to hear from you.</p>
+        <p>Contact through <a href="https://kingstonavenueofhonour.org.au/contact/" target="_blank">kingstonavenueofhonour.org.au/contact</a></p>
+        <p>For RSL honour boards, visit <a href="https://www.creswicksmeatonrsl.org.au" target="_blank">creswicksmeatonrsl.org.au</a></p>
+      </div>
+    </div>
+  </section>
+
+  <footer class="site-footer">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="footer-logo">✦ Avenue of Honour</div>
+        <p>A community heritage project for the former Shire of Creswick.</p>
+        <p class="footer-lest">Lest We Forget</p>
+      </div>
+      <div class="footer-col">
+        <h4>Pages</h4>
+        <a href="virtual-tour.html" target="_blank">360° Virtual Tour</a>
+        <a href="tree-map.html" target="_blank">Tree Map</a>
+        <a href="about.html" target="_blank">About</a>
+        <a href="profiles.html" target="_blank">Profiles</a>
+        <a href="resources.html" target="_blank">Resources</a>
+      </div>
+      <div class="footer-col">
+        <h4>External Links</h4>
+        <a href="https://kingstonavenueofhonour.org.au" target="_blank">Kingston Avenue ↗</a>
+        <a href="https://www.creswicksmeatonrsl.org.au" target="_blank">Creswick RSL ↗</a>
+        <a href="https://www.awm.gov.au" target="_blank">War Memorial ↗</a>
+      </div>
+    </div>
+    <div class="footer-bottom"><p>© 2026 Kingston Avenue of Honour — former Shire of Creswick Avenue of Honour at Kingston</p></div>
+  </footer>
+  <script>document.getElementById('navToggle').addEventListener('click',function(){document.getElementById('mobileMenu').classList.toggle('open');});</script>
+</body>
+</html>

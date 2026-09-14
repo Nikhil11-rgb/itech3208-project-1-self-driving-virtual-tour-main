@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>Tree Map — Avenue of Honour</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Source+Serif+4:opsz,wght@8..60,400;8..60,500&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+  <style>
+
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --gd:#1a2e1f;--gm:#2d4a32;--gl:#3d6645;--gp:#e8f0e9;
+  --gold:#b8852a;--goldl:#d4a84b;--parch:#f7f3eb;--pdark:#ede7d8;
+  --td:#1a1a1a;--tb:#3a3530;--tm:#7a7268;--tl:#a89f94;
+  --red:#a63a2a;--orange:#c86b22;--yellow:#f2c94c;--leaf:#4f7d3a;--bord:rgba(45,74,50,0.15);
+  --shm:0 6px 24px rgba(0,0,0,0.12);--shs:0 2px 8px rgba(0,0,0,0.08);
+  --r:6px;--rl:12px;--nh:68px;
+  --fd:'Playfair Display',Georgia,serif;--fb:'Source Serif 4',Georgia,serif;
+}
+html{scroll-behavior:smooth;}
+body{font-family:var(--fb);color:var(--tb);background:var(--parch);line-height:1.7;font-size:16px;-webkit-font-smoothing:antialiased;padding-top:var(--nh);}
+
+/* === NAV === */
+.site-nav{position:fixed;top:0;left:0;right:0;height:var(--nh);z-index:1000;background:rgba(26,46,31,0.97);border-bottom:1px solid rgba(184,133,42,0.3);}
+.nav-inner{max-width:1200px;margin:0 auto;padding:0 2rem;height:var(--nh);display:flex;align-items:center;gap:1rem;}
+.nav-brand{display:flex;align-items:center;gap:10px;text-decoration:none;flex-shrink:0;}
+.nav-emblem{color:var(--gold);font-size:20px;line-height:1;}
+.nav-brand-text{display:flex;flex-direction:column;line-height:1.2;}
+.nav-brand-title{color:#fff;font-family:var(--fd);font-size:15px;font-weight:600;letter-spacing:0.02em;}
+.nav-brand-sub{color:var(--goldl);font-size:10px;letter-spacing:0.1em;text-transform:uppercase;}
+.nav-links{margin-left:auto;display:flex;align-items:center;gap:2px;}
+.nav-link{color:rgba(255,255,255,0.75);text-decoration:none;font-size:14px;padding:0.5rem 0.85rem;border-radius:var(--r);transition:all 0.2s;font-family:var(--fb);white-space:nowrap;}
+.nav-link:hover{color:#fff;background:rgba(255,255,255,0.1);}
+.nav-link.active{color:var(--goldl);background:rgba(184,133,42,0.15);border:1px solid rgba(184,133,42,0.3);}
+.nav-toggle{display:none;flex-direction:column;gap:5px;background:none;border:none;cursor:pointer;padding:8px;margin-left:auto;}
+.nav-toggle span{width:22px;height:2px;background:#fff;display:block;}
+.mobile-menu{display:none;position:fixed;top:var(--nh);left:0;right:0;background:var(--gd);z-index:999;border-bottom:1px solid rgba(184,133,42,0.2);padding:0.5rem 2rem 1rem;flex-direction:column;}
+.mobile-menu.open{display:flex!important;}
+.mobile-menu .nav-link{color:rgba(255,255,255,0.8);padding:0.75rem 0;border-bottom:1px solid rgba(255,255,255,0.08);border-radius:0;font-size:15px;}
+.mobile-menu .nav-link:last-child{border-bottom:none;}
+@media(max-width:768px){.nav-links{display:none!important;}.nav-toggle{display:flex!important;}}
+@media(min-width:769px){.nav-toggle{display:none!important;}.mobile-menu:not(.open){display:none!important;}}
+
+/* === PAGE HERO === */
+.page-hero{background:var(--gd);padding:4.5rem 0 3.5rem;position:relative;overflow:hidden;}
+.page-hero::before{content:'';position:absolute;inset:0;background:url('https://kingstonavenueofhonour.org.au/wp-content/uploads/Avenue-020-UPDATED-800x369.jpg') center/cover;opacity:0.1;}
+.page-hero-inner{position:relative;z-index:1;max-width:1200px;margin:0 auto;padding:0 2rem;}
+.page-hero-eyebrow{font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:var(--goldl);margin-bottom:0.75rem;display:flex;align-items:center;gap:0.6rem;}
+.page-hero-eyebrow::before{content:'';width:24px;height:1px;background:var(--gold);display:inline-block;}
+.page-hero-title{font-family:var(--fd);font-size:clamp(2rem,4vw,3rem);font-weight:700;color:#fff;line-height:1.15;margin-bottom:0.75rem;}
+.page-hero-desc{color:rgba(255,255,255,0.7);font-size:1rem;max-width:560px;line-height:1.75;}
+
+/* === CONTAINER === */
+.container{max-width:1200px;margin:0 auto;padding:0 2rem;}
+.section-label{font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:var(--gold);margin-bottom:0.75rem;display:flex;align-items:center;gap:0.75rem;}
+.section-label::before{content:'';width:24px;height:1px;background:var(--gold);display:inline-block;}
+.section-title{font-family:var(--fd);font-size:clamp(1.75rem,3.5vw,2.4rem);font-weight:700;color:var(--td);line-height:1.2;margin-bottom:1rem;}
+
+/* === FOOTER === */
+.site-footer{background:var(--gd);color:rgba(255,255,255,0.65);padding:3rem 0 1.5rem;margin-top:5rem;}
+.footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr;gap:3rem;max-width:1200px;margin:0 auto;padding:0 2rem 2rem;border-bottom:1px solid rgba(255,255,255,0.1);}
+.footer-logo{font-family:var(--fd);font-size:1.15rem;color:#fff;margin-bottom:0.75rem;}
+.footer-brand p{font-size:0.85rem;line-height:1.7;margin-bottom:0.4rem;}
+.footer-lest{color:var(--goldl)!important;font-style:italic;font-family:var(--fd);}
+.footer-col h4{font-family:var(--fd);color:#fff;font-size:0.9rem;margin-bottom:0.75rem;}
+.footer-col a{display:block;color:rgba(255,255,255,0.6);text-decoration:none;font-size:0.85rem;padding:0.25rem 0;transition:color 0.2s;}
+.footer-col a:hover{color:var(--goldl);}
+.footer-bottom{max-width:1200px;margin:0 auto;padding:1.5rem 2rem 0;text-align:center;font-size:0.8rem;color:rgba(255,255,255,0.3);}
+@media(max-width:900px){.footer-grid{grid-template-columns:1fr 1fr;}.footer-brand{grid-column:1/-1;}}
+@media(max-width:600px){.footer-grid{grid-template-columns:1fr;}.container{padding:0 1.25rem;}}
+
+
+html,body{height:100%;}
+body{padding-top:0;overflow:hidden;}
+.map-page{display:flex;flex-direction:column;height:100vh;padding-top:var(--nh);}
+.map-topbar{background:#fff;border-bottom:1px solid var(--bord);padding:0.75rem 1.5rem;display:flex;align-items:center;gap:1rem;flex-wrap:wrap;flex-shrink:0;box-shadow:var(--shs);}
+.search-wrap{position:relative;flex:0 0 250px;display:flex;align-items:center;}
+.search-icon{position:absolute;left:10px;font-size:13px;pointer-events:none;}
+.search-input{width:100%;padding:0.6rem 2rem 0.6rem 2rem;border:1.5px solid var(--bord);border-radius:var(--r);font-family:var(--fb);font-size:13px;background:var(--gp);color:var(--td);outline:none;transition:border-color 0.2s;}
+.search-input:focus{border-color:var(--gl);background:#fff;}
+.filter-wrap{display:flex;align-items:center;gap:6px;flex-wrap:wrap;}
+.filter-label{font-size:12px;color:var(--tm);white-space:nowrap;}
+.filter-btn{padding:0.35rem 0.8rem;border-radius:20px;border:1.5px solid var(--bord);background:transparent;font-family:var(--fb);font-size:12px;color:var(--tm);cursor:pointer;transition:all 0.2s;white-space:nowrap;}
+.filter-btn:hover{border-color:var(--gl);color:var(--gm);}
+.filter-btn.active{background:var(--gd);border-color:var(--gd);color:#fff;}
+.results-count{margin-left:auto;font-size:12px;color:var(--tm);white-space:nowrap;}
+.map-body{flex:1;display:flex;overflow:hidden;min-height:0;}
+#map{flex:1;min-width:0;z-index:1;}
+.profile-panel{width:360px;flex-shrink:0;background:#fff;border-left:1px solid var(--bord);overflow-y:auto;display:flex;flex-direction:column;}
+.panel-placeholder{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:2.5rem 1.5rem;color:var(--tm);}
+.placeholder-icon{font-size:52px;margin-bottom:1rem;opacity:0.4;}
+.panel-placeholder h3{font-family:var(--fd);font-size:1.1rem;color:var(--td);margin-bottom:0.5rem;}
+.panel-placeholder p{font-size:0.875rem;line-height:1.65;}
+.profile-detail{display:none;flex-direction:column;flex:1;}
+.detail-header{background:var(--gd);padding:1.25rem 1.5rem;position:relative;}
+.detail-close{position:absolute;top:0.75rem;right:0.75rem;background:rgba(255,255,255,0.12);border:none;color:#fff;width:28px;height:28px;border-radius:50%;cursor:pointer;font-size:13px;display:flex;align-items:center;justify-content:center;transition:background 0.2s;}
+.detail-close:hover{background:rgba(255,255,255,0.25);}
+.detail-avatar{width:52px;height:52px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:var(--fd);font-size:1rem;font-weight:700;margin-bottom:0.75rem;border:2px solid rgba(255,255,255,0.2);}
+.av-s{background:rgba(255,255,255,0.12);color:#fff;}
+.av-n{background:rgba(139,32,32,0.6);color:#fff;}
+.detail-tree{font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:var(--goldl);margin-bottom:3px;}
+.detail-name{font-family:var(--fd);font-size:1.1rem;font-weight:700;color:#fff;line-height:1.3;margin-bottom:0.5rem;}
+.detail-badges{display:flex;gap:6px;flex-wrap:wrap;}
+.badge{padding:2px 10px;border-radius:10px;font-size:11px;font-weight:500;}
+.bs{background:rgba(255,255,255,0.15);color:#fff;}.bn{background:rgba(139,32,32,0.7);color:#fff;}.bf{background:rgba(0,0,0,0.35);color:rgba(255,255,255,0.85);}.bl{background:rgba(184,133,42,0.3);color:var(--goldl);}
+.detail-body{padding:1.25rem 1.5rem;flex:1;overflow-y:auto;}
+.detail-row{display:flex;justify-content:space-between;align-items:baseline;padding:0.45rem 0;border-bottom:1px solid rgba(0,0,0,0.05);gap:1rem;}
+.row-label{font-size:12px;color:var(--tm);text-transform:uppercase;letter-spacing:0.06em;flex-shrink:0;}
+.row-val{font-size:13px;color:var(--td);font-weight:500;text-align:right;}
+.detail-sec{margin-top:1.1rem;}
+.detail-sec-title{font-size:11px;text-transform:uppercase;letter-spacing:0.08em;color:var(--gm);font-weight:600;margin-bottom:0.4rem;}
+.detail-sec p{font-size:0.875rem;color:var(--tb);line-height:1.7;}
+.detail-footer{padding:1rem 1.5rem;border-top:1px solid var(--bord);display:flex;gap:0.75rem;}
+.detail-footer a{flex:1;text-align:center;padding:0.6rem;border-radius:var(--r);font-size:13px;text-decoration:none;font-family:var(--fb);transition:all 0.2s;}
+.btn-dir{background:var(--gm);color:#fff;}.btn-dir:hover{background:var(--gd);}
+.btn-rec{border:1.5px solid var(--bord);color:var(--tm);background:transparent;}.btn-rec:hover{border-color:var(--gl);color:var(--gm);}
+.tree-marker{width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:15px;border:2.5px solid #fff;box-shadow:0 2px 8px rgba(0,0,0,0.25);cursor:pointer;transition:transform 0.15s;}
+.tree-marker:hover{transform:scale(1.2);}
+.ms{background:var(--gm);}.mn{background:var(--red);}.ma{transform:scale(1.3)!important;box-shadow:0 0 0 3px var(--gold),0 4px 12px rgba(0,0,0,0.3)!important;}
+.leaflet-popup-content-wrapper{border-radius:var(--rl)!important;padding:0!important;overflow:hidden;border:1px solid var(--bord);box-shadow:var(--shm)!important;}
+.leaflet-popup-content{margin:0!important;font-family:var(--fb)!important;}
+.map-popup{padding:1rem 1.25rem;min-width:190px;}
+.popup-tree{font-size:11px;color:var(--gold);letter-spacing:0.08em;text-transform:uppercase;margin-bottom:3px;}
+.popup-name{font-family:var(--fd);font-size:0.95rem;font-weight:700;color:var(--td);margin-bottom:5px;}
+.popup-meta{font-size:12px;color:var(--tm);margin-bottom:8px;}
+.popup-btn{display:inline-block;padding:0.4rem 0.9rem;background:var(--gm);color:#fff;border-radius:var(--r);font-size:12px;cursor:pointer;border:none;font-family:var(--fb);transition:background 0.2s;}
+.popup-btn:hover{background:var(--gd);}
+.map-legend{position:absolute;bottom:2rem;left:1rem;z-index:400;background:rgba(255,255,255,0.95);border:1px solid var(--bord);border-radius:var(--rl);padding:0.75rem 1rem;font-size:12px;box-shadow:var(--shs);}
+.legend-title{font-weight:600;color:var(--td);margin-bottom:6px;font-size:11px;text-transform:uppercase;letter-spacing:0.06em;}
+.legend-item{display:flex;align-items:center;gap:8px;color:var(--tm);margin-bottom:4px;}
+.legend-dot{width:14px;height:14px;border-radius:50%;border:2px solid #fff;box-shadow:0 1px 3px rgba(0,0,0,0.2);flex-shrink:0;}
+@media(max-width:768px){body{overflow:auto;}.map-page{height:auto;overflow:auto;}.map-body{flex-direction:column;height:auto;overflow:visible;}#map{height:420px;flex:none;}.profile-panel{width:100%;border-left:none;border-top:1px solid var(--bord);max-height:420px;}.map-topbar{gap:0.75rem;}.search-wrap{flex:none;width:100%;}.results-count{margin-left:0;}}
+
+  
+
+/* Client requested autumn colour scheme: orange, yellow, red and greens */
+.site-nav{background:linear-gradient(90deg,#142515 0%,#1f3f25 55%,rgba(166,58,42,0.94) 145%)!important;border-bottom-color:rgba(242,201,76,0.35)!important;}
+.nav-emblem,.nav-brand-sub{color:#f2c94c!important;}
+.nav-link.active{color:#f2c94c!important;background:rgba(200,107,34,0.20)!important;border-color:rgba(242,201,76,0.45)!important;}
+.nav-link:hover{background:rgba(200,107,34,0.16)!important;}
+button,.btn,.hero-cta-primary,.primary-btn,.stop-btn.active{box-shadow:0 4px 14px rgba(200,107,34,0.12);}
+::selection{background:#d08a1f;color:#142515;}
+
+
+
+/* === CLIENT FEEDBACK UPDATE: autumn orange, yellow, red and greens across whole website === */
+:root{
+  --client-green-deep:#122818;
+  --client-green:#2f5b35;
+  --client-leaf:#5f8f3f;
+  --client-orange:#c86b22;
+  --client-yellow:#f2c94c;
+  --client-red:#a63a2a;
+  --client-cream:#f8f1df;
+}
+.site-header,.site-nav,.topbar,.tour-nav{
+  background:linear-gradient(90deg,#122818 0%,#234a2b 56%,#7f2f25 130%)!important;
+  border-bottom:1px solid rgba(242,201,76,.42)!important;
+}
+.brand-emblem,.nav-emblem,.brand-sub,.nav-brand-sub,.page-hero-eyebrow,.section-label,
+.nav-link.active,.mobile-nav-link.active,.mobile-menu .nav-link.active{
+  color:var(--client-yellow)!important;
+}
+.nav-link.active,.mobile-nav-link.active,.mobile-menu .nav-link.active{
+  background:rgba(200,107,34,.22)!important;
+  border-color:rgba(242,201,76,.5)!important;
+}
+.nav-link:hover,.mobile-nav-link:hover,.mobile-menu .nav-link:hover{
+  color:#fff!important;
+  background:rgba(200,107,34,.17)!important;
+}
+.btn-primary,.hero-cta-primary,.primary-btn,.cta-primary,.tour-btn-primary,
+button.primary,.resource-icon,.profile-avatar,.filter-btn.active,.stop-btn.active,
+.progress-dot.active,.scene-dot.active,.hotspot,.map-marker.active{
+  background:linear-gradient(135deg,var(--client-orange),var(--client-yellow))!important;
+  color:#122818!important;
+  border-color:rgba(242,201,76,.7)!important;
+}
+.btn-primary:hover,.hero-cta-primary:hover,.primary-btn:hover,.cta-primary:hover{
+  background:linear-gradient(135deg,var(--client-red),var(--client-orange))!important;
+  color:#fff!important;
+}
+.page-hero,.hero,.site-footer,.footer,.tour-sidebar,.info-panel,.stop-card,.nearby-card{
+  border-color:rgba(242,201,76,.25)!important;
+}
+.card,.info-card,.resource-card,.profile-card,.feature-card,.quick-card,.route-card,
+.about-card,.tree-card,.stat-card{
+  border-top:3px solid var(--client-orange)!important;
+}
+a:not(.nav-link):not(.btn):not(.header-brand):not(.nav-brand){
+  color:#9d4f1e;
+}
+a:not(.nav-link):not(.btn):not(.header-brand):not(.nav-brand):hover{
+  color:var(--client-red);
+}
+::selection{background:var(--client-yellow);color:#122818;}
+
+</style>
+</head>
+<body>
+  <nav class="site-nav">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-brand">
+        <span class="nav-emblem">✦</span>
+        <div class="nav-brand-text">
+          <span class="nav-brand-title">Avenue of Honour</span>
+          <span class="nav-brand-sub">Kingston Avenue of Honour</span>
+        </div>
+      </a>
+      <div class="nav-links">
+        <a href="index.html" class="nav-link">Home</a>
+        <a href="virtual-tour.html" target="_blank" class="nav-link">360° Virtual Tour</a>
+        <a href="tree-map.html" target="_blank" class="nav-link active">Tree Map</a>
+        <a href="about.html" target="_blank" class="nav-link">About</a>
+        <a href="profiles.html" target="_blank" class="nav-link">Profiles</a>
+        <a href="resources.html" target="_blank" class="nav-link">Resources</a>
+      </div>
+      <button class="nav-toggle" id="navToggle"><span></span><span></span><span></span></button>
+    </div>
+    <div class="mobile-menu" id="mobileMenu">
+      <a href="index.html" class="nav-link">Home</a>
+      <a href="virtual-tour.html" target="_blank" class="nav-link">360° Virtual Tour</a>
+      <a href="tree-map.html" target="_blank" class="nav-link active">Tree Map</a>
+      <a href="about.html" target="_blank" class="nav-link">About</a>
+      <a href="profiles.html" target="_blank" class="nav-link">Profiles</a>
+      <a href="resources.html" target="_blank" class="nav-link">Resources</a>
+    </div>
+  </nav>
+  <div class="map-page">
+    <div class="map-topbar">
+      <div class="search-wrap">
+        <span class="search-icon">🔍</span>
+        <input type="text" id="searchInput" class="search-input" placeholder="Search name or tree number…"/>
+      </div>
+      <div class="filter-wrap">
+        <span class="filter-label">Area:</span>
+        <button class="filter-btn active" data-filter="all">All</button>
+        <button class="filter-btn" data-filter="Kingston">Kingston</button>
+        <button class="filter-btn" data-filter="Tourello">Tourello</button>
+        <button class="filter-btn" data-filter="Yandoit Hills">Yandoit Hills</button>
+        <button class="filter-btn" data-filter="Creswick">Creswick</button>
+        <button class="filter-btn" data-filter="Smeaton">Smeaton</button>
+      </div>
+      <div class="results-count" id="resultsCount">Showing all 24 trees</div>
+    </div>
+    <div class="map-body">
+      <div id="map">
+        <div class="map-legend">
+          <div class="legend-title">Legend</div>
+          <div class="legend-item"><div class="legend-dot" style="background:#2d4a32"></div>Soldier</div>
+          <div class="legend-item"><div class="legend-dot" style="background:#8b2020"></div>Nurse</div>
+        </div>
+      </div>
+      <div class="profile-panel" id="profilePanel">
+        <div class="panel-placeholder" id="panelPlaceholder">
+          <div class="placeholder-icon">🌳</div>
+          <h3>Select a tree</h3>
+          <p>Click any marker on the map to view the profile of the person it commemorates.</p>
+        </div>
+        <div class="profile-detail" id="profileDetail">
+          <div class="detail-header">
+            <button class="detail-close" id="detailClose">✕</button>
+            <div class="detail-avatar" id="detailAvatar"></div>
+            <div class="detail-tree" id="detailTree"></div>
+            <div class="detail-name" id="detailName"></div>
+            <div class="detail-badges" id="detailBadges"></div>
+          </div>
+          <div class="detail-body">
+            <div class="detail-row"><span class="row-label">Gender</span><span class="row-val" id="dGender"></span></div>
+            <div class="detail-row"><span class="row-label">Age</span><span class="row-val" id="dAge"></span></div>
+            <div class="detail-row"><span class="row-label">Rank</span><span class="row-val" id="dRank"></span></div>
+            <div class="detail-row"><span class="row-label">Locality</span><span class="row-val" id="dLoc"></span></div>
+            <div class="detail-sec"><div class="detail-sec-title">Service History</div><p id="dService"></p></div>
+            <div class="detail-sec"><div class="detail-sec-title">Notes</div><p id="dNotes"></p></div>
+          </div>
+          <div class="detail-footer">
+            <a id="dMaps" href="#" target="_blank" class="btn-dir">📍 Directions</a>
+            <a href="https://kingstonavenueofhonour.org.au/tree-map-app/" target="_blank" class="btn-rec">Full Record ↗</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script src="script.js"></script>
+  <script>
+  (function(){
+    var map,markers={},activeId=null,cf='all',cs='';
+    function ini(n){return n.split(' ').filter(function(w){return/^[A-Z]/.test(w);}).slice(0,2).map(function(w){return w[0];}).join('');}
+    function init(){
+      map=L.map('map',{center:[-37.418,144.1803],zoom:13});
+      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{attribution:'© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',maxZoom:19}).addTo(map);
+      L.polyline(TREES.map(function(t){return[t.lat,144.18];}),{color:'#8B6914',weight:3,opacity:0.5,dashArray:'6,4'}).addTo(map);
+      L.marker([-37.399,144.18],{icon:L.divIcon({className:'',html:'<div title="The Monument 1927" style="width:30px;height:30px;background:#1a2e1f;border:2px solid #b8852a;border-radius:4px;display:flex;align-items:center;justify-content:center;font-size:14px;box-shadow:0 2px 8px rgba(0,0,0,0.3);">🪨</div>',iconAnchor:[15,30]})}).addTo(map).bindPopup('<div class="map-popup"><div class="popup-tree">Monument</div><div class="popup-name">The Avenue Monument</div><div class="popup-meta">Harcourt granite, unveiled 1927</div></div>');
+      TREES.forEach(function(t){addMarker(t);});
+      updateCount(TREES.length);
+    }
+    function addMarker(t){
+      var isN=t.role==='Nurse';
+      var off=(t.side==='west')?-0.0012:0.0012;
+      var m=L.marker([t.lat,t.lng+off],{icon:L.divIcon({className:'',html:'<div class="tree-marker '+(isN?'mn':'ms')+'">'+(isN?'🌸':'🌳')+'</div>',iconSize:[30,30],iconAnchor:[15,15],popupAnchor:[0,-18]})}).addTo(map).bindPopup('<div class="map-popup"><div class="popup-tree">'+t.treeNum+'</div><div class="popup-name">'+t.name+'</div><div class="popup-meta">'+t.rank+' · '+t.location+(t.fallen?' · <span style="color:#8b2020">Fallen</span>':'')+'</div><button class="popup-btn" onclick="window._op('+t.id+')">View Profile</button></div>');
+      m.on('click',function(){setActive(t.id);openProfile(t);});
+      markers[t.id]={m:m,off:off};
+    }
+    window._op=function(id){var t=TREES.find(function(x){return x.id===id;});if(t){setActive(t.id);openProfile(t);map.closePopup();}};
+    function setActive(id){
+      if(activeId&&markers[activeId]){var el=markers[activeId].m.getElement();if(el)el.querySelector('.tree-marker').classList.remove('ma');}
+      activeId=id;if(markers[id]){var el=markers[id].m.getElement();if(el)el.querySelector('.tree-marker').classList.add('ma');}
+    }
+    function openProfile(t){
+      document.getElementById('panelPlaceholder').style.display='none';
+      var d=document.getElementById('profileDetail');d.style.display='flex';
+      var isN=t.role==='Nurse';
+      var av=document.getElementById('detailAvatar');
+      av.textContent=ini(t.name);av.className='detail-avatar '+(isN?'av-n':'av-s');
+      document.getElementById('detailTree').textContent=t.treeNum;
+      document.getElementById('detailName').textContent=t.name;
+      document.getElementById('dGender').textContent=t.gender;
+      document.getElementById('dAge').textContent=t.age?t.age+' years':'Unknown';
+      document.getElementById('dRank').textContent=t.rank;
+      document.getElementById('dLoc').textContent=t.location;
+      document.getElementById('dService').textContent=t.service;
+      document.getElementById('dNotes').textContent=t.notes;
+      var b='<span class="badge '+(isN?'bn':'bs')+'">'+t.role+'</span>';
+      if(t.fallen)b+='<span class="badge bf">Fallen</span>';
+      b+='<span class="badge bl">'+t.location+'</span>';
+      document.getElementById('detailBadges').innerHTML=b;
+      document.getElementById('dMaps').href='https://www.google.com/maps/dir/?api=1&destination='+t.lat+','+(t.lng+markers[t.id].off);
+    }
+    document.getElementById('detailClose').addEventListener('click',function(){
+      document.getElementById('profileDetail').style.display='none';
+      document.getElementById('panelPlaceholder').style.display='flex';
+      if(activeId&&markers[activeId]){var el=markers[activeId].m.getElement();if(el)el.querySelector('.tree-marker').classList.remove('ma');}activeId=null;
+    });
+    document.getElementById('searchInput').addEventListener('input',function(){cs=this.value.trim().toLowerCase();applyFilters();});
+    document.querySelectorAll('.filter-btn').forEach(function(btn){btn.addEventListener('click',function(){document.querySelectorAll('.filter-btn').forEach(function(b){b.classList.remove('active');});btn.classList.add('active');cf=btn.dataset.filter;applyFilters();});});
+    function applyFilters(){
+      var vis=TREES.filter(function(t){return(cf==='all'||t.location===cf)&&(!cs||t.name.toLowerCase().includes(cs)||t.treeNum.toLowerCase().includes(cs)||t.location.toLowerCase().includes(cs));});
+      var ids=new Set(vis.map(function(t){return t.id;}));
+      TREES.forEach(function(t){var mk=markers[t.id];if(!mk)return;if(ids.has(t.id)){if(!map.hasLayer(mk.m))mk.m.addTo(map);}else{if(map.hasLayer(mk.m))map.removeLayer(mk.m);}});
+      updateCount(vis.length);
+      if(vis.length>0&&vis.length<TREES.length){var lats=vis.map(function(t){return t.lat;}),lngs=vis.map(function(t){return t.lng;});map.fitBounds([[Math.min.apply(null,lats)-0.003,Math.min.apply(null,lngs)-0.005],[Math.max.apply(null,lats)+0.003,Math.max.apply(null,lngs)+0.005]],{animate:true,padding:[30,30]});}
+      else if(vis.length===TREES.length){map.setView([-37.418,144.1803],13,{animate:true});}
+    }
+    function updateCount(n){var total=TREES.length;document.getElementById('resultsCount').textContent=n===total?'Showing all '+total+' trees':'Showing '+n+' of '+total+' trees';}
+    document.getElementById('navToggle').addEventListener('click',function(){document.getElementById('mobileMenu').classList.toggle('open');});
+    init();
+  })();
+  </script>
+</body>
+</html>
